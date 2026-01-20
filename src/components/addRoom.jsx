@@ -20,6 +20,12 @@ const AddRoom = () => {
         existingRoom.push(newRoom);
         localStorage.setItem("room", JSON.stringify(existingRoom));
         alert("Room added successfully");
+        setRoom({
+            roomNumber: "",
+            roomType: "",
+            roomPrice: "",
+            roomDescription: "",
+        });
         console.log(room);
     };
     return (

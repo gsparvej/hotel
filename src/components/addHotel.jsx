@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const AddHotel = () => {
     const [hotel, setHotel] = useState({
-        roomId: "",
+        roomIds: [],
         hotelName: "",
         hotelAddress: "",
         hotelPhone: "",
@@ -19,11 +19,16 @@ const AddHotel = () => {
         setRoom(rooms);
     }, []);
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setHotel({
-            ...hotel,
-            [name]: value,
-        });
+        const { name, value, options } = e.target;
+
+        if (name === "roomIds") {
+            const selected = Array.from(options)
+                .filter(option => option.selected)
+                .map(option => Number(option.value));
+            setHotel({ ...hotel, roomIds: selected });
+        } else {
+            setHotel({ ...hotel, [name]: value });
+        }
     };
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,6 +37,14 @@ const AddHotel = () => {
         existingHotel.push(newHotel);
         localStorage.setItem("hotel", JSON.stringify(existingHotel));
         alert("Hotel added successfully");
+        setHotel({
+            roomIds: [],
+            hotelName: "",
+            hotelAddress: "",
+            hotelPhone: "",
+            hotelEmail: "",
+            hotelDescription: "",
+        });
         console.log(hotel);
     };
 
@@ -45,7 +58,7 @@ const AddHotel = () => {
                 </div>
                 <div>
                     <label> Room Number : </label>
-                    <select name="roomId" value={hotel.roomId} onChange={handleChange}>
+                    <select name="roomIds" value={hotel.roomIds} onChange={handleChange}>
                         {room.map((item) => (
                             <option key={item.id} value={item.id}>
                                 {item.roomNumber}

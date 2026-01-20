@@ -30,6 +30,15 @@ const BookingHotel = () => {
         existingBookingHotel.push(newBookingHotel);
         localStorage.setItem("bookingHotel", JSON.stringify(existingBookingHotel));
         alert("Hotel Booked successfully");
+        setBookingHotel({
+            hotelId: "",
+            personName: "",
+            personPhone: "",
+            personEmail: "",
+            checkInDate: "",
+            checkOutDate: "",
+            address: ""
+        });
         console.log(bookingHotel);
     };
     return (
@@ -37,7 +46,7 @@ const BookingHotel = () => {
             <h1>Booking Hotel</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Hotel ID:</label>
+                    <label>Hotel Name:</label>
                     <select name="hotelId" value={bookingHotel.hotelId} onChange={handleChange}>
                         {hotel.map((item) => (
                             <option key={item.id} value={item.id}>
